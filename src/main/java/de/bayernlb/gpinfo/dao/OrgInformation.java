@@ -7,8 +7,8 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "TBIM0103ORGE", schema = "DBIMUD02")
-@NamedQuery(name="Test.findAll", query="SELECT t FROM Test t")
-public class Test implements Serializable {
+@NamedQuery(name="OrgInformation.findAll", query="SELECT t FROM OrgInformation t")
+public class OrgInformation implements Serializable {
 
     @Id
     @Column(name = "ORGE_SCHL")
@@ -124,7 +124,7 @@ public class Test implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Test{");
+        final StringBuilder sb = new StringBuilder("OrgInformation{");
         sb.append("titel=").append(titel);
         sb.append(", orgKurz='").append(orgKurz).append('\'');
         sb.append(", orgSuper=").append(orgSuper);

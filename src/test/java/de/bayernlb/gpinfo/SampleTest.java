@@ -1,12 +1,12 @@
 package de.bayernlb.gpinfo;
 
+import de.bayernlb.gpinfo.dao.OrgInformation;
 import de.bayernlb.gpinfo.repository.TitelRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,7 +26,8 @@ public class SampleTest {
     @Test
     public void readAllTitel() {
 
-        List<de.bayernlb.gpinfo.dao.Test> titels = titelRepository.findAll();
+
+        List<OrgInformation> titels = titelRepository.findAll();
         titels.stream().forEach(System.out::println);
 
     }
