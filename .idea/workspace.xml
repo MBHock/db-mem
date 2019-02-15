@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf9337b9-970a-41ac-8405-4ec420bcc213" name="Default Changelist" comment="" />
+    <list default="true" id="cf9337b9-970a-41ac-8405-4ec420bcc213" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/test/java/de/bayernlb/gpinfo/SampleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/de/bayernlb/gpinfo/SampleTest.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/de/bayernlb/gpinfo/SampleTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="157">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,8 +119,8 @@
         <option value="$PROJECT_DIR$/src/main/java/de/bayernlb/gpinfo/repository/TitelRepository.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/de/bayernlb/gpinfo/dao/Test.java" />
-        <option value="$PROJECT_DIR$/src/test/java/de/bayernlb/gpinfo/SampleTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/bayernlb/gpinfo/JpaConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/test/java/de/bayernlb/gpinfo/SampleTest.java" />
       </list>
     </option>
   </component>
@@ -237,7 +239,7 @@
     <property name="DatabaseDriversLRU" value="h2&#10;db2&#10;hsqldb" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550157470926" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550218920875" />
     <property name="database.console.LAST_STATE" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -318,9 +320,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="SampleTest - 2019.02.14 at 15h 41m 05s.xml">
-      <configuration name="SampleTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="SampleTest - 2019.02.14 at 15h 41m 11s.xml">
       <configuration name="SampleTest" configurationId="JUnit" />
     </history-entry>
@@ -348,9 +347,12 @@
     <history-entry file="SampleTest - 2019.02.14 at 16h 15m 24s.xml">
       <configuration name="SampleTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="SampleTest - 2019.02.15 at 09h 20m 22s.xml">
+      <configuration name="SampleTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28548000" />
+    <option name="totallyTimeSpent" value="28732000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1700" y="25" width="1822" height="992" extended-state="0" />
@@ -583,8 +585,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/de/bayernlb/gpinfo/SampleTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="157">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

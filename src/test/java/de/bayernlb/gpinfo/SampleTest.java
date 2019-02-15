@@ -15,7 +15,7 @@ import java.util.List;
 @ContextConfiguration(
         classes = {JpaConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
-@Transactional
+//@Transactional
 public class SampleTest {
 
 
