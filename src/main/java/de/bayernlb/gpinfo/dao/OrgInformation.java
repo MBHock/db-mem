@@ -124,7 +124,7 @@ public class OrgInformation implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("OrgInformation{");
+        final StringBuilder sb = new StringBuilder("OrgInformationRepository{");
         sb.append("titel=").append(titel);
         sb.append(", orgKurz='").append(orgKurz).append('\'');
         sb.append(", orgSuper=").append(orgSuper);
