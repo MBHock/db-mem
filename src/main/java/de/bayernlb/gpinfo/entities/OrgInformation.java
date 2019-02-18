@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo.dao;
+package de.bayernlb.gpinfo.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "TBIM0103ORGE", schema = "DBIMUD02")
-@NamedQuery(name="OrgInformation.findAll", query="SELECT t FROM OrgInformation t")
+@NamedQuery(name = "OrgInformation.findAll", query = "SELECT t FROM OrgInformation t")
 public class OrgInformation implements Serializable {
 
     @Id
@@ -19,7 +19,6 @@ public class OrgInformation implements Serializable {
 
     @Column(name = "FS_ORGE_SUPER")
     private Integer orgSuper;
-
 
     @Column(name = "ORGE_LEITEBENE_KZ")
     private String leitebene;
@@ -124,7 +123,7 @@ public class OrgInformation implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("OrgInformationRepository{");
+        final StringBuilder sb = new StringBuilder("OrgInformationRepository [");
         sb.append("titel=").append(titel);
         sb.append(", orgKurz='").append(orgKurz).append('\'');
         sb.append(", orgSuper=").append(orgSuper);
@@ -135,7 +134,7 @@ public class OrgInformation implements Serializable {
         sb.append(", gfgb=").append(gfgb);
         sb.append(", begDate=").append(begDate);
         sb.append(", endDate=").append(endDate);
-        sb.append('}');
+        sb.append(']');
         return sb.toString();
     }
 }
