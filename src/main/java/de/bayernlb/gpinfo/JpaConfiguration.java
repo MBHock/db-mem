@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.io.IOException;
 
 @Configuration
 @PropertySource("database.properties")
@@ -23,23 +24,16 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class JpaConfiguration {
 
-    private static final String[] scripts = {"create_schema.sql",
-            "dbimud02.sql",
-            "dbziag01.sql",
-            "dbzili01.sql",
-            "dbzili02.sql",
-            "dbzili03.sql",
-            "dbzilk01.sql",
-            "en.sql"};
+    private static final String PATH_TO_MODIFIED_FILE = "modifiedInitDB.sql";
 
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
-        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName("dbgpinfo").addScripts(scripts).build();
+        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName("dbgpinfo").addScript(PATH_TO_MODIFIED_FILE).build();
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory() {
+    public EntityManagerFactory entityManagerFactory() throws IOException {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
@@ -54,11 +48,10 @@ public class JpaConfiguration {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
+    public PlatformTransactionManager transactionManager() throws IOException {
 
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
     }
-
 }
