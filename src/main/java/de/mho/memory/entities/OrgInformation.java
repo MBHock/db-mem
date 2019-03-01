@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo.entities;
+package de.mho.memory.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;

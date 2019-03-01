@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo;
+package de.mho.memory;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,8 @@ import java.io.IOException;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories(basePackages = "de.bayernlb.gpinfo.repositories")
-@EntityScan(basePackages = {"de.bayernlb.gpinfo.entities"})
+@EnableJpaRepositories(basePackages = "de.mho.memory.repositories")
+@EntityScan(basePackages = {"de.mho.memory.entities"})
 @EnableTransactionManagement
 public class JpaConfiguration {
 
@@ -29,7 +29,7 @@ public class JpaConfiguration {
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
-        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName("dbgpinfo").addScript(PATH_TO_MODIFIED_FILE).build();
+        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName("memory-db").addScript(PATH_TO_MODIFIED_FILE).build();
     }
 
     @Bean
@@ -40,7 +40,7 @@ public class JpaConfiguration {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("de.bayernlb.gpinfo.entities");
+        factory.setPackagesToScan("de.mho.memory.entities");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
 

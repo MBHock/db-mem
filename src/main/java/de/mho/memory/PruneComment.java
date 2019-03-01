@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo;
+package de.mho.memory;
 
 public class PruneComment {
 

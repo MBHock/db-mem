@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo;
+package de.mho.memory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

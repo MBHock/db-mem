@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo;
+package de.mho.memory;
 
 import java.util.HashMap;
 import java.util.Map;

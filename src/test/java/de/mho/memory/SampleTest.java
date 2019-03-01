@@ -1,7 +1,7 @@
-package de.bayernlb.gpinfo;
+package de.mho.memory;
 
-import de.bayernlb.gpinfo.entities.OrgInformation;
-import de.bayernlb.gpinfo.repositories.OrgInformationRepository;
+import de.mho.memory.entities.OrgInformation;
+import de.mho.memory.repositories.OrgInformationRepository;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;

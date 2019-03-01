@@ -1,4 +1,4 @@
-package de.bayernlb.gpinfo;
+package de.mho.memory;
 
 import java.util.Map;
 import java.util.StringJoiner;
