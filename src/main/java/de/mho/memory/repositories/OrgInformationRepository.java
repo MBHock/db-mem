@@ -6,10 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-//should be with CrudRepository
+//should be with CrudRepository only
 //@Repository
 public interface OrgInformationRepository extends CrudRepository<OrgInformation, Integer> {
-    //
+
     List<OrgInformation> findAll();
 
 

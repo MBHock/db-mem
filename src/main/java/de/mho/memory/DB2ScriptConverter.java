@@ -32,6 +32,22 @@ public enum DB2ScriptConverter {
 
             List<String> sqlStatements = statementReader.readStatementFromFile(getPath2InitScript().toFile());
 
+            //StringJoiner joiner = new StringJoiner(System.lineSeparator());
+            //statementReader.openFile(getPath2InitScript().toFile());
+
+//            String nextStatement = null;
+//            //clasic
+//            while ((nextStatement = statementReader.readNextStatement()) != null) {
+//                String statement = PruneComment.prune(nextStatement);
+//                if (!statement.isEmpty()) {
+//                    statement = modifySchemaOrCommitStatement(statement);
+//                    statement = CreateAndViewStatementConverter.collectColumnWithHashsign(statement, columnWithHashsign);
+//                    statement = CreateAndViewStatementConverter.convertDB2Statement2HsqlStatement(statement);
+//                    joiner.add(InsertAndUpdateStatementConverter.modify(statement));
+//                }
+//            }
+
+//With lambda
             String convertedStatements = sqlStatements.stream().map(PruneComment::prune).filter(statement -> !statement.isEmpty())
                     .map(this::modifySchemaOrCommitStatement)
                     .map(statement -> CreateAndViewStatementConverter.collectColumnWithHashsign(statement, columnWithHashsign))

@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 public class SqlStatementReader {
 
+    private Scanner scanner;
+
+
     public List<String> readStatementFromFile(File file) throws FileNotFoundException {
         List<String> statements = new ArrayList<>();
 
@@ -21,6 +24,20 @@ public class SqlStatementReader {
         }
 
         return statements;
+    }
+
+    public void openFile(File file) throws FileNotFoundException {
+        scanner = new Scanner(file);
+        scanner.useDelimiter(";");
+    }
+
+    public String readNextStatement() {
+        if (scanner.hasNext()) {
+            return trimNewlinesAndWhitespaces(scanner.next());
+        }
+
+        scanner.close();
+        return null;
     }
 
     private String trimNewlinesAndWhitespaces(String statement) {
