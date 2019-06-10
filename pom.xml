@@ -16,7 +16,7 @@
         <springframework.version>5.1.1.RELEASE</springframework.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <javax.persistence.version>2.2</javax.persistence.version>
-        <spring.data.version>2.1.6.RELEASE</spring.data.version>
+        <spring.data.version>2.1.8.RELEASE</spring.data.version>
         <spring.autoconfig.version>2.1.5.RELEASE</spring.autoconfig.version>
         <spring.maven.version>2.1.4.RELEASE</spring.maven.version>
         <hsql.db.version>2.4.1</hsql.db.version>
