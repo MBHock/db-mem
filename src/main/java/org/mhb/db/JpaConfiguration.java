@@ -1,4 +1,4 @@
-package de.mho.memory;
+package org.mhb.db;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -19,17 +19,26 @@ import java.io.IOException;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories(basePackages = "de.mho.memory.repositories")
-@EntityScan(basePackages = {"de.mho.memory.entities"})
+@EnableJpaRepositories(basePackages = "org.mhb.db.entities")
+@EntityScan(basePackages = {"org.mhb.db.entities"})
 @EnableTransactionManagement
 public class JpaConfiguration {
 
-    private static final String PATH_TO_MODIFIED_FILE = "modifiedInitDB.sql";
+    public static final String MEMORY_DATABASE_NAME = "mem-dbgpinfo";
+    private static DB2Script2HSQL converter = DB2Script2HSQL.READ_INIT_SCRIPT;
+
+    static {
+        try {
+            converter.writeScriptContentToTestPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource createMemoryDataSource() {
         EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
-        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName("memory-db").addScript(PATH_TO_MODIFIED_FILE).build();
+        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName(MEMORY_DATABASE_NAME).addScript(converter.getPathToModifiedDBScript()).build();
     }
 
     @Bean
@@ -40,8 +49,8 @@ public class JpaConfiguration {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("de.mho.memory.entities");
-        factory.setDataSource(dataSource());
+        factory.setPackagesToScan("org.mhb.db.entities");
+        factory.setDataSource(createMemoryDataSource());
         factory.afterPropertiesSet();
 
         return factory.getObject();
@@ -49,7 +58,6 @@ public class JpaConfiguration {
 
     @Bean
     public PlatformTransactionManager transactionManager() throws IOException {
-
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;

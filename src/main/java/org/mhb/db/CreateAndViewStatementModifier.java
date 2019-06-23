@@ -1,15 +1,20 @@
-package de.mho.memory;
+package org.mhb.db;
 
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CreateAndViewStatementConverter {
+public class CreateAndViewStatementModifier implements ModifiableStatement {
 
     private static final Pattern pattern = Pattern.compile("[a-zA-Z_0-9]+#+[a-z0-9A-z_#]*");
 
-    public static String convertDB2Statement2HsqlStatement(String sqlCommand) {
+    @Override
+    public String modifyStatement(String sqlCommand) {
+        return convertDB2Statement2HsqlStatement(sqlCommand);
+    }
+
+    private String convertDB2Statement2HsqlStatement(String sqlCommand) {
         if (!istCreateOrViewCommand(sqlCommand)) {
             return sqlCommand;
         }
