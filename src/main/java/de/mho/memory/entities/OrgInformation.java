@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 
+@Deprecated
 @Entity
 @Table(name = "TBIM0103ORGE", schema = "DBIMUD02")
 @NamedQuery(name = "OrgInformation.findAll", query = "SELECT t FROM OrgInformation t")

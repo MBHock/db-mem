@@ -1,4 +1,4 @@
-package de.mho.memory.repositories;
+package de.mho.memory.entities;
 
 import de.mho.memory.entities.OrgInformation;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +8,7 @@ import java.util.List;
 
 //should be with CrudRepository only
 //@Repository
+@Deprecated
 public interface OrgInformationRepository extends CrudRepository<OrgInformation, Integer> {
 
     List<OrgInformation> findAll();

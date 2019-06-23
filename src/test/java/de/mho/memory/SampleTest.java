@@ -1,7 +1,7 @@
 package de.mho.memory;
 
 import de.mho.memory.entities.OrgInformation;
-import de.mho.memory.repositories.OrgInformationRepository;
+import de.mho.memory.entities.OrgInformationRepository;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
