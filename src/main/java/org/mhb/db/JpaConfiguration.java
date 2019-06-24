@@ -24,7 +24,7 @@ import java.io.IOException;
 @EnableTransactionManagement
 public class JpaConfiguration {
 
-    public static final String MEMORY_DATABASE_NAME = "mem-dbgpinfo";
+    public static final String MEMORY_DATABASE_NAME = "mem-db";
     private static DB2Script2HSQL converter = DB2Script2HSQL.READ_INIT_SCRIPT;
 
     static {
