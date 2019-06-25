@@ -10,13 +10,15 @@ import java.util.stream.Stream;
 public class DataDefinitionStatement implements Statement {
 
     private static final Pattern pattern = Pattern.compile("[a-zA-Z_0-9]+#+[a-z0-9A-z_#]*");
-    private Map<String, String> columnWithHashsign = new HashMap<>();
+    private ColumnWithHashsign columnWithHashsign = ColumnWithHashsign.INSTANCE;
+
     private final String statement;
 
     public DataDefinitionStatement(String statement) {
         this.statement = convertDB2StatementToHsql(statement) + ";";
 
         if (this.statement.contains("#")) {
+            //TODO: parse table name
             collectColumnWithHashsign();
         }
     }
@@ -34,11 +36,13 @@ public class DataDefinitionStatement implements Statement {
 
     private final void collectColumnWithHashsign() {
         Matcher matcher = pattern.matcher(statement);
-
+        Map<String, String> columns = new HashMap<>();
         while (matcher.find()) {
             String nextColumn = matcher.group();
-            columnWithHashsign.put(nextColumn, nextColumn.replaceAll("#", "_"));
+            columns.put(nextColumn, nextColumn.replaceAll("#", "_"));
         }
+
+        columnWithHashsign.add("", columns);
     }
 
 

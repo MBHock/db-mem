@@ -14,6 +14,7 @@ public class DataManipulationStatement implements Statement {
 
     public DataManipulationStatement(String statement) {
         this.statement = modifyStatement(statement) + ";";
+        //TODO: parse table name
     }
 
 
