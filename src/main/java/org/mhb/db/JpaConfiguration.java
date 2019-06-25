@@ -19,47 +19,45 @@ import java.io.IOException;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories(basePackages = "org.mhb.db.entities")
-@EntityScan(basePackages = {"org.mhb.db.entities"})
 @EnableTransactionManagement
 public class JpaConfiguration {
 
     public static final String MEMORY_DATABASE_NAME = "mem-db";
-    private static DB2Script2HSQL converter = DB2Script2HSQL.READ_INIT_SCRIPT;
+//    private static DB2Script2HSQL converter = DB2Script2HSQL.READ_INIT_SCRIPT;
+//
+//    static {
+//        try {
+//            converter.writeScriptContentToTestPath();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    static {
-        try {
-            converter.writeScriptContentToTestPath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Bean
-    public DataSource createMemoryDataSource() {
-        EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
-        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName(MEMORY_DATABASE_NAME).addScript(converter.getPathToModifiedDBScript()).build();
-    }
-
-    @Bean
-    public EntityManagerFactory entityManagerFactory() throws IOException {
-
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
-
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("org.mhb.db.entities");
-        factory.setDataSource(createMemoryDataSource());
-        factory.afterPropertiesSet();
-
-        return factory.getObject();
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager() throws IOException {
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(entityManagerFactory());
-        return txManager;
-    }
+//    @Bean
+//    public DataSource createMemoryDataSource() {
+//        EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
+//        return dbBuilder.setType(EmbeddedDatabaseType.HSQL).setName(MEMORY_DATABASE_NAME).addScript(converter.getPathToModifiedDBScript()).build();
+//    }
+//
+//    @Bean
+//    public EntityManagerFactory entityManagerFactory() throws IOException {
+//
+//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//        vendorAdapter.setGenerateDdl(true);
+//
+//        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+//        factory.setJpaVendorAdapter(vendorAdapter);
+//        factory.setPackagesToScan("org.mhb.db.entities");
+//        factory.setDataSource(createMemoryDataSource());
+//        factory.afterPropertiesSet();
+//
+//        return factory.getObject();
+//    }
+//
+//    @Bean
+//    public PlatformTransactionManager transactionManager() throws IOException {
+//        JpaTransactionManager txManager = new JpaTransactionManager();
+//        txManager.setEntityManagerFactory(entityManagerFactory());
+//        return txManager;
+//    }
 }

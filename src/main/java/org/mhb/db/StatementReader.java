@@ -1,10 +1,10 @@
 package org.mhb.db;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface StatementReader {
 
-    List<String> readStatements(File file) throws FileNotFoundException;
+    List<String> readStatements(Path path);
 }
