@@ -9,12 +9,13 @@ import java.util.stream.Stream;
 public class DataManipulationStatement implements Statement {
 
     private final String statement;
+    private final String tableName;
     private static final Pattern pattern = Pattern.compile("TIMESTAMP([^\\)]*)");
     private static final String TIMESTAMP_FORMAT = "'YYYY-MM-DD-HH24.MI.SS.FFFFFF'";
 
     public DataManipulationStatement(String statement) {
         this.statement = modifyStatement(statement) + ";";
-        //TODO: parse table name
+        this.tableName = Statement.findTableName(statement);
     }
 
 
@@ -24,16 +25,20 @@ public class DataManipulationStatement implements Statement {
                 .anyMatch(statement::startsWith);
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("DataManipulationStatement [");
-        sb.append("statement=").append(statement).append("]");
-        return sb.toString();
-    }
 
     @Override
     public String getStatement() {
         return statement;
+    }
+
+    @Override
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return DataManipulationStatement.class;
     }
 
     private final String modifyStatement(String statement) {
@@ -56,6 +61,13 @@ public class DataManipulationStatement implements Statement {
 
     private boolean hasTimestampFunction(String statement) {
         return statement.contains("TIMESTAMP");
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("DataManipulationStatement [");
+        sb.append("statement=").append(statement).append("]");
+        return sb.toString();
     }
 
     private enum DataManipulationCommandName {

@@ -3,10 +3,10 @@ package org.mhb.db;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.joining;
 
 public class DB2ScriptConverter {
 
@@ -27,7 +27,7 @@ public class DB2ScriptConverter {
 
         StatementReader statementReader = new SqlStatementReader();
 
-        String collect = pathStream
+        Map<Class, List<Statement>> collect = pathStream
                 .parallel()
                 .peek(System.out::println)
                 .map(statementReader::readStatements)
@@ -35,12 +35,11 @@ public class DB2ScriptConverter {
                 .map(PruneComment::replaceCommentWithEmptyString)
                 .filter(statement -> !statement.isEmpty())
                 .map(StatementFactory::createStatement)
-                .map(Statement::getStatement)
-                .collect(joining(System.lineSeparator()));
+                .collect(Collectors.groupingBy(Statement::getType));
 
-
-        System.out.println("XXX: " + collect);
+        //System.out.println("XXX: " + collect);
     }
+
 
 //        logger.fine("URL from ClassLoader: " + urlToFile);
 //            logger.fine("URL from own class loader: " + urlToFile);

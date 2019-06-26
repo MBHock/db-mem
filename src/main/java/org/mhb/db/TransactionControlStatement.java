@@ -29,6 +29,16 @@ public class TransactionControlStatement implements Statement {
         return statement;
     }
 
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return TransactionControlStatement.class;
+    }
+
     private enum TransactionControlCommandName {
         COMMIT,
         ROLLBACK

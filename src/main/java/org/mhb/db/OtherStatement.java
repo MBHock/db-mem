@@ -14,6 +14,16 @@ public class OtherStatement implements Statement {
     }
 
     @Override
+    public String getTableName() {
+        return null;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return OtherStatement.class;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("OtherStatement [");
         sb.append("statement=").append(statement).append("]");

@@ -9,18 +9,17 @@ import java.util.stream.Stream;
 
 public class DataDefinitionStatement implements Statement {
 
+    private final SpecialColumnNames specialColumnNames = SpecialColumnNames.INSTANCE;
     private static final Pattern pattern = Pattern.compile("[a-zA-Z_0-9]+#+[a-z0-9A-z_#]*");
-    private ColumnWithHashsign columnWithHashsign = ColumnWithHashsign.INSTANCE;
 
     private final String statement;
+    private final String tableName;
+
 
     public DataDefinitionStatement(String statement) {
         this.statement = convertDB2StatementToHsql(statement) + ";";
-
-        if (this.statement.contains("#")) {
-            //TODO: parse table name
-            collectColumnWithHashsign();
-        }
+        this.tableName = Statement.findTableName(statement);
+        specialColumnNames.add(tableName, findColumnNamesWithHashsign(statement));
     }
 
     public static Boolean isStatement(String statement) {
@@ -34,19 +33,32 @@ public class DataDefinitionStatement implements Statement {
         return statement;
     }
 
-    private final void collectColumnWithHashsign() {
-        Matcher matcher = pattern.matcher(statement);
-        Map<String, String> columns = new HashMap<>();
-        while (matcher.find()) {
-            String nextColumn = matcher.group();
-            columns.put(nextColumn, nextColumn.replaceAll("#", "_"));
+    @Override
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return DataDefinitionStatement.class;
+    }
+
+    final Map<String, String> findColumnNamesWithHashsign(String statement) {
+        Map<String, String> columnsWithHash = new HashMap<>();
+
+        if (statement.contains("#")) {
+            Matcher matcher = pattern.matcher(statement);
+            while (matcher.find()) {
+                String nextColumn = matcher.group();
+                columnsWithHash.put(nextColumn, nextColumn.replaceAll("#", "_"));
+            }
         }
 
-        columnWithHashsign.add("", columns);
+        return columnsWithHash;
     }
 
 
-    private final String convertDB2StatementToHsql(String sqlCommand) {
+    final String convertDB2StatementToHsql(String sqlCommand) {
         sqlCommand = sqlCommand.replaceAll("FOR SBCS DATA", "");
         sqlCommand = sqlCommand.replaceAll("WITH DEFAULT NULL", "");
 
@@ -85,7 +97,7 @@ public class DataDefinitionStatement implements Statement {
         String modified = joiner.toString();
         if (!modified.isEmpty()) {
             if (modified.charAt(modified.length() - 1) != ')') {
-                modified = modified + ");";
+                modified = modified + ")";
             }
             return modified;
         }
@@ -105,8 +117,20 @@ public class DataDefinitionStatement implements Statement {
         DROP,
         ALTER,
         TRUNCATE,
-        COMMENT,
         RENAME
     }
+
+//    public static void main(String... args) {
+//        List<String> str = Arrays.asList("CREATE TABLE db1.TABMSG",
+//                "CREATE DATABASE db",
+//                "CREATE view view1",
+//                "DROP TABLE table_name",
+//                "TRUNCATE TABLE  table_name", "ALTER TABLE table_name");
+//        String[] split = str.get(0).split("\\s+");
+//        System.out.println(Arrays.deepToString(split));
+//        //String pattern = "([Cc][Rr][Ee][Aa][Tt][Ee]){1}|([Dd][Rr][Oo][Pp]){1}|([Tt][Rr][Uu][Nn][Cc][Aa][Tt][Ee]){1}";
+//        String pattern = "([Cc][Rr][Ee][Aa][Tt][Ee]){1}|([Dd][Rr][Oo][Pp]){1}|([Tt][Rr][Uu][Nn][Cc][Aa][Tt][Ee]){1}";
+//
+//    }
 
 }

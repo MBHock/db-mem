@@ -3,18 +3,18 @@ package org.mhb.db;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ColumnWithHashsign {
+public enum SpecialColumnNames {
 
     INSTANCE;
 
-    private Map<String, Map<String, String>> columnWithHashsign = new HashMap<>();
+    private Map<String, Map<String, String>> columnNameWithHashsign = new HashMap<>();
 
 
     public void add(String tableName, Map<String, String> columns) {
-        columnWithHashsign.put(tableName, columns);
+        columnNameWithHashsign.put(tableName, columns);
     }
 
     public Map<String, String> getHashcolumns(String tableName) {
-        return columnWithHashsign.get(tableName);
+        return columnNameWithHashsign.get(tableName);
     }
 }
