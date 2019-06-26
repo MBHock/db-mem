@@ -27,7 +27,7 @@ In the JPA configuration we need to configure a Datasource and EntityManagerFact
 Now we can navigate to MessageTest class. There are two test cases. This Test class uses the JpaConfiguration as context. When we will run this test
 class it will start set up a memory database and on top you will get Spring JPA.
 
-I started my memory database with the src/test/resources/create_db_1.sql script and I asserted my db1.TABMSG content from this test class.
+I started my memory database with the src/test/resources/create_db_1.sql_X script and I asserted my db1.TABMSG content from this test class.
 
 You can take the MessageTest class and run the test. It should run without any error and should pass
 * readAll and

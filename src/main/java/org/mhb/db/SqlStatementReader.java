@@ -31,25 +31,4 @@ public class SqlStatementReader implements StatementReader {
             throw new RuntimeException(e);
         }
     }
-
-    //        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
-//                readAllStatements(path), Spliterator.ORDERED | Spliterator.NONNULL), false);
-//        try {
-//            final Scanner scanner = new Scanner(file);
-//            scanner.useDelimiter(";");
-//
-//            Iterator<String> iter = new Iterator<String>() {
-//                @Override
-//                public boolean hasNext() {
-//                    return scanner.hasNext();
-//                }
-//
-//                @Override
-//                public String next() {
-//                    return scanner.next();
-//                }
-//            };
-//
-//            return iter;
-//        }
 }

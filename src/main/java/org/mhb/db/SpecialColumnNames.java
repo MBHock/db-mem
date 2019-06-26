@@ -1,5 +1,6 @@
 package org.mhb.db;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ public enum SpecialColumnNames {
 
     INSTANCE;
 
-    private Map<String, Map<String, String>> columnNameWithHashsign = new HashMap<>();
+    private Map<String, Map<String, String>> columnNameWithHashsign = Collections.synchronizedMap(new HashMap<>());
 
 
     public void add(String tableName, Map<String, String> columns) {
@@ -15,6 +16,6 @@ public enum SpecialColumnNames {
     }
 
     public Map<String, String> getHashcolumns(String tableName) {
-        return columnNameWithHashsign.get(tableName);
+        return Collections.unmodifiableMap(columnNameWithHashsign.get(tableName));
     }
 }

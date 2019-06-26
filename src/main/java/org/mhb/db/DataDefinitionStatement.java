@@ -17,15 +17,32 @@ public class DataDefinitionStatement implements Statement {
 
 
     public DataDefinitionStatement(String statement) {
-        this.statement = convertDB2StatementToHsql(statement) + ";";
+        String tmpStmt = convertDB2StatementToHsql(statement) + ";";
         this.tableName = Statement.findTableName(statement);
-        specialColumnNames.add(tableName, findColumnNamesWithHashsign(statement));
+
+        Map<String, String> columnNamesWithHashsign = findColumnNamesWithHashsign(statement);
+        specialColumnNames.add(tableName, columnNamesWithHashsign);
+
+        this.statement = replaceAllColumnWithHashsign(tmpStmt, columnNamesWithHashsign);
+    }
+
+    String replaceAllColumnWithHashsign(String tmpStmt, Map<String, String> columnNamesWithHashsign) {
+        if (!columnNamesWithHashsign.isEmpty()) {
+            for (Map.Entry<String, String> entry : columnNamesWithHashsign.entrySet()) {
+                tmpStmt = tmpStmt.replace(entry.getKey(), entry.getValue());
+            }
+        }
+
+        return tmpStmt;
     }
 
     public static Boolean isStatement(String statement) {
+        String statementIdentity = statement.split("\\s+")[0];
+        statementIdentity = statementIdentity.toUpperCase();
+
         return Stream.of(DataDefinitionCommandName.values())
                 .map(DataDefinitionCommandName::name)
-                .anyMatch(statement::startsWith);
+                .anyMatch(statementIdentity::equals);
     }
 
     @Override
@@ -119,18 +136,4 @@ public class DataDefinitionStatement implements Statement {
         TRUNCATE,
         RENAME
     }
-
-//    public static void main(String... args) {
-//        List<String> str = Arrays.asList("CREATE TABLE db1.TABMSG",
-//                "CREATE DATABASE db",
-//                "CREATE view view1",
-//                "DROP TABLE table_name",
-//                "TRUNCATE TABLE  table_name", "ALTER TABLE table_name");
-//        String[] split = str.get(0).split("\\s+");
-//        System.out.println(Arrays.deepToString(split));
-//        //String pattern = "([Cc][Rr][Ee][Aa][Tt][Ee]){1}|([Dd][Rr][Oo][Pp]){1}|([Tt][Rr][Uu][Nn][Cc][Aa][Tt][Ee]){1}";
-//        String pattern = "([Cc][Rr][Ee][Aa][Tt][Ee]){1}|([Dd][Rr][Oo][Pp]){1}|([Tt][Rr][Uu][Nn][Cc][Aa][Tt][Ee]){1}";
-//
-//    }
-
 }

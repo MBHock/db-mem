@@ -20,9 +20,12 @@ public class DataManipulationStatement implements Statement {
 
 
     public static Boolean isStatement(String statement) {
+        String statementIdentity = statement.split("\\s+")[0];
+        statementIdentity = statementIdentity.toUpperCase();
+
         return Stream.of(DataManipulationCommandName.values())
                 .map(DataManipulationCommandName::name)
-                .anyMatch(statement::startsWith);
+                .anyMatch(statementIdentity::equals);
     }
 
 

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DB2ScriptConverter {
@@ -14,8 +14,8 @@ public class DB2ScriptConverter {
 //    private static final String pathToModifiedDBScript = "target/test-classes/modifiedInitDB.sql";
 //    private final Logger logger;
 //    private final String scriptContent;
-
 //    private HashMap<String, String> columnWithHashsign = new HashMap<>();
+
 //    private StatementReader statementReader = new SqlStatementReader();
 
     Logger logger = Logger.getLogger(DB2ScriptConverter.class.getSimpleName());
@@ -24,43 +24,39 @@ public class DB2ScriptConverter {
 
         FileNameCollector fileNameCollector = new FileNameCollector();
         Stream<Path> pathStream = fileNameCollector.searchSqlFile();
-
         StatementReader statementReader = new SqlStatementReader();
+        SpecialColumnNames specialColumnNames = SpecialColumnNames.INSTANCE;
 
-        Map<Class, List<Statement>> collect = pathStream
-                .parallel()
+
+        StringJoiner ddStmt = new StringJoiner(System.lineSeparator());
+        StringJoiner dmStmt = new StringJoiner(System.lineSeparator());
+
+        pathStream
                 .peek(System.out::println)
                 .map(statementReader::readStatements)
                 .flatMap(List::stream)
                 .map(PruneComment::replaceCommentWithEmptyString)
                 .filter(statement -> !statement.isEmpty())
                 .map(StatementFactory::createStatement)
-                .collect(Collectors.groupingBy(Statement::getType));
+                .forEach(stmt -> {
+                    if (stmt.getType() == DataDefinitionStatement.class) {
+                        ddStmt.add(stmt.getStatement());
+                        ddStmt.add("COMMIT;");
+                    } else if (stmt.getType() == DataManipulationStatement.class) {
 
-        //System.out.println("XXX: " + collect);
+                        String sqlStatement = stmt.getStatement();
+                        Map<String, String> hashcolumns = specialColumnNames.getHashcolumns(stmt.getTableName());
+                        if (!hashcolumns.isEmpty()) {
+                            for (Map.Entry<String, String> entry : hashcolumns.entrySet()) {
+                                sqlStatement = sqlStatement.replace(entry.getKey(), entry.getValue());
+                            }
+                        }
+                        dmStmt.add(sqlStatement);
+                    }
+                });
+
+        System.out.println("Create: " + ddStmt.toString());
+        System.out.println();
+        System.out.println("Insert: " + dmStmt.toString());
     }
-
-
-//        logger.fine("URL from ClassLoader: " + urlToFile);
-//            logger.fine("URL from own class loader: " + urlToFile);
-//                logger.fine("URL from DB2Script2HSQL loader: " + urlToFile);
-//        logger.info("Init DB Script found " + urlToFile);
-//
-//            scriptContent = replaceColumWithHashsign(convertedStatements);
-
-
-//
-//    private String replaceColumWithHashsign(String sqlStatements) {
-//
-//        for (Map.Entry<String, String> entry : columnWithHashsign.entrySet()) {
-//            sqlStatements = sqlStatements.replace(entry.getKey(), entry.getValue());
-//        }
-//
-//        return sqlStatements;
-//    }
-//
-
-//    public void writeScriptContentToTestPath() throws IOException {
-//        Files.write(Paths.get(pathToModifiedDBScript), scriptContent.getBytes());
-//    }
 }
