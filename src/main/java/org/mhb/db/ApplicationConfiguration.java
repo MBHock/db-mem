@@ -30,7 +30,8 @@ public enum ApplicationConfiguration {
     private void setLogLevel() {
         try {
             LogManager.getLogManager().readConfiguration(getResourceAsStream(LOGGING_PROPERTIES));
-        } catch (IOException e) {
+        }
+        catch(IOException e) {
             logger.log(Level.SEVERE, "Error while reading logging property from {0}", "logging.properties");
             throw new RuntimeException(e);
         }
@@ -41,7 +42,8 @@ public enum ApplicationConfiguration {
         InputStream is = getResourceAsStream(propertyFileName);
         try {
             properties.load(is);
-        } catch (IOException e) {
+        }
+        catch(IOException e) {
             logger.log(Level.SEVERE, "Error while reading property from {0}", propertyFileName);
             throw new RuntimeException(e);
         }
@@ -67,10 +69,22 @@ public enum ApplicationConfiguration {
 
     public String[] getIncludePattern() {
         String includePattern = get("include-file-pattern");
-        if (Objects.isNull(includePattern) || includePattern.isEmpty()) {
+        if(Objects.isNull(includePattern) || includePattern.isEmpty()) {
             return new String[]{".*\\.sql", ".*\\.SQL"};
         }
 
         return includePattern.split(",");
+    }
+
+    public String getDBName() {
+        return get("jdbc.databasename");
+    }
+
+    public String getDBUserName() {
+        return get("jdbc.user");
+    }
+
+    public String DBPassword() {
+        return get("jdbc.pass", "");
     }
 }

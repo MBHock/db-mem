@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -19,13 +18,19 @@ public class FileNameCollector {
     private ApplicationConfiguration configuration = ApplicationConfiguration.INSTANCE;
 
 
-    public Stream<Path> searchSqlFile() throws IOException {
+    public Stream<Path> searchSqlFile() {
         logger.log(Level.FINE, "Search file in {0}.", configuration.getSearchDirectory());
 
-        Stream<Path> paths = Files.find(
-                Paths.get(configuration.getSearchDirectory()), Integer.MAX_VALUE,
-                (path, basicFileAttributes) -> matchIncludePath(path),
-                new FileVisitOption[0]);
+        Stream<Path> paths = null;
+        try {
+            paths = Files.find(
+                    Paths.get(configuration.getSearchDirectory()), Integer.MAX_VALUE,
+                    (path, basicFileAttributes) -> matchIncludePath(path),
+                    new FileVisitOption[0]);
+        }
+        catch(IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return paths;
     }
@@ -34,10 +39,10 @@ public class FileNameCollector {
     private boolean matchIncludePath(Path path) {
         boolean shouldInclude = true;
 
-        for (String pattern : configuration.getIncludePattern()) {
+        for(String pattern : configuration.getIncludePattern()) {
             shouldInclude &= path.toString().matches(pattern);
 
-            if (!shouldInclude) {
+            if(!shouldInclude) {
                 break;
             }
         }
@@ -45,4 +50,5 @@ public class FileNameCollector {
         logger.log(Level.FINER, "File={0}, IncludePattern={1}, matched={2}.", new Object[]{path, Arrays.deepToString(configuration.getIncludePattern()), shouldInclude});
         return shouldInclude;
     }
+
 }

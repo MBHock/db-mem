@@ -10,10 +10,10 @@
 #  echo ""
 #done < ((sed -n '/CREATE TABLE/,/;/p' create_db_2.sql))
 
-lines=$(sed '/CREATE TABLE/,/;/!d' initDB.sql)
+#lines=$(sed '/CREATE TABLE/,/;/!d' initDB.sql)
 
-for line in "$lines"; do
-echo "$lines"
-echo ""
-echo ""
-done
+#for line in "$lines"; do
+#echo "$lines"
+#echo ""
+#echo ""
+#done
